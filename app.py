@@ -295,17 +295,44 @@ st.markdown(
 )
 
 st.markdown("## 📊 Quick Asset Class Guide")
-cheat_sheet_df = pd.DataFrame(
-    [
-        ["Nifty 50", "High Risk", "~12-14%", "Ultimate Wealth Generator"],
-        ["US Stocks", "High Risk", "~10-12%", "Global Growth Booster"],
-        ["Gold", "Medium Risk", "~8-10%", "Crisis Protection Shield"],
-        ["Bonds", "Low Risk", "~6-8%", "Steady & Safe Income"],
-        ["Cash", "Zero Risk", "~3-4%", "Safest (Instant Use Emergency Fund)"],
-    ],
-    columns=["Asset Class", "Risk Level", "Historical Returns", "Superpower"],
+cheat_sheet_rows = [
+    ["Nifty 50", "High Risk", "~12-14%", "Ultimate Wealth Generator"],
+    ["US Stocks", "High Risk", "~10-12%", "Global Growth Booster"],
+    ["Gold", "Medium Risk", "~8-10%", "Crisis Protection Shield"],
+    ["Bonds", "Low Risk", "~6-8%", "Steady & Safe Income"],
+    ["Cash", "Zero Risk", "~3-4%", "Safest (Instant Use Emergency Fund)"],
+]
+
+risk_badge_html = {
+    "High Risk": "<span style='display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;color:#ef4444;background:#fee2e2;'>High Risk</span>",
+    "Medium Risk": "<span style='display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;color:#f97316;background:#ffedd5;'>Medium Risk</span>",
+    "Low Risk": "<span style='display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;color:#22c55e;background:#dcfce7;'>Low Risk</span>",
+    "Zero Risk": "<span style='display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;color:#3b82f6;background:#dbeafe;'>Zero Risk</span>",
+}
+
+rows_html = ""
+for asset, risk, returns, superpower in cheat_sheet_rows:
+    badge = risk_badge_html.get(risk, risk)
+    rows_html += f"<tr><td style='padding:12px 10px;border:1px solid #e2e8f0;text-align:center;'>{asset}</td><td style='padding:12px 10px;border:1px solid #e2e8f0;text-align:center;'>{badge}</td><td style='padding:12px 10px;border:1px solid #e2e8f0;text-align:center;'>{returns}</td><td style='padding:12px 10px;border:1px solid #e2e8f0;text-align:center;'>{superpower}</td></tr>"
+
+st.markdown(
+    f"""
+    <div style='background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:10px;box-shadow:0 8px 18px rgba(15,23,42,0.04);'>
+        <table style='width:100%;border-collapse:collapse;font-size:14px;'>
+            <thead>
+                <tr>
+                    <th style='padding:12px 10px;border:1px solid #e2e8f0;background:#f8fafc;text-align:center;'>Asset Class</th>
+                    <th style='padding:12px 10px;border:1px solid #e2e8f0;background:#f8fafc;text-align:center;'>Risk Level</th>
+                    <th style='padding:12px 10px;border:1px solid #e2e8f0;background:#f8fafc;text-align:center;'>Historical Returns</th>
+                    <th style='padding:12px 10px;border:1px solid #e2e8f0;background:#f8fafc;text-align:center;'>Superpower</th>
+                </tr>
+            </thead>
+            <tbody>{rows_html}</tbody>
+        </table>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
-st.dataframe(cheat_sheet_df, use_container_width=True, hide_index=True)
 
 st.markdown("🏆 Safest Spot: Cash and Bonds keep your money completely safe from stock market crashes.")
 st.markdown("🚀 Growth Engines: Nifty 50 and US Stocks have big swings but grow your wealth the fastest over time.")
@@ -318,3 +345,11 @@ if shock_test:
     st.success(
         f"If the stock market crashes by -30%, your specific diversified mix would only dip by roughly {estimated_drop:.1f}% because your Gold and Bonds act as a protective cushion!"
     )
+
+st.markdown("## 🔮 Your 10-Year Wealth Journey")
+years = st.slider("Select Time Horizon (Years)", min_value=1, max_value=25, value=10, step=1)
+future_value = investment * ((1 + portfolio_return) ** years)
+
+st.markdown(
+    f"💰 Growing to: ₹{future_value:,.0f}! By keeping your money diversified over {years} years, your wealth multiplies efficiently while safely defending against inflation."
+)
