@@ -9,30 +9,41 @@ st.markdown(
     """
     <style>
         :root {
-            color-scheme: dark;
+            color-scheme: light;
         }
-        .stApp {
-            background: linear-gradient(135deg, #060816 0%, #0f172a 45%, #111827 100%);
-            color: #f8fafc;
+        body, .stApp {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
         }
         .block-container {
             padding-top: 2rem;
             padding-bottom: 2rem;
         }
-        .stMetric { 
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            border-radius: 16px;
-            padding: 0.7rem 0.9rem;
+        h1, h2, h3, h4, h5 {
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            color: #0f172a;
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
         }
-        .card {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(99, 102, 241, 0.25);
-            border-radius: 16px;
-            padding: 1rem 1.15rem;
-            margin-bottom: 0.8rem;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+        /* Sidebar styling */
+        .stSidebar {
+            background-color: #ffffff;
+            border-right: 1px solid #e2e8f0;
+            color: #0f172a;
         }
+        /* Card / metric styling */
+        .stMetric, .card {
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px;
+            padding: 12px !important;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06) !important;
+            color: #0f172a !important;
+        }
+        .card h4 { margin-top: 0; }
+        /* Ensure dataframes have a subtle background */
+        .stDataFrameContainer { background: transparent; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -119,11 +130,13 @@ with left_col:
     )
     fig.update_traces(texttemplate="%{text:.1f} %", textposition="outside")
     fig.update_layout(
-        plot_bgcolor="#020617",
-        paper_bgcolor="#020617",
-        font={"color": "#f8fafc"},
+        plot_bgcolor="#ffffff",
+        paper_bgcolor="#f8fafc",
+        font={"color": "#0f172a"},
         margin=dict(l=20, r=20, t=10, b=10),
         coloraxis_showscale=False,
+        xaxis=dict(showgrid=True, gridcolor="#e6e8eb", zeroline=False),
+        yaxis=dict(showgrid=False),
     )
     st.plotly_chart(fig, use_container_width=True)
 
@@ -145,11 +158,13 @@ fig_corr = px.imshow(
     aspect="auto",
 )
 fig_corr.update_layout(
-    plot_bgcolor="#020617",
-    paper_bgcolor="#020617",
-    font={"color": "#f8fafc"},
+    plot_bgcolor="#ffffff",
+    paper_bgcolor="#f8fafc",
+    font={"color": "#0f172a"},
     margin=dict(l=20, r=20, t=10, b=10),
 )
+fig_corr.update_xaxes(showgrid=True, gridcolor="#e6e8eb", zeroline=False)
+fig_corr.update_yaxes(showgrid=True, gridcolor="#e6e8eb", zeroline=False)
 st.plotly_chart(fig_corr, use_container_width=True)
 
 st.markdown("### Strategic Advisory")
