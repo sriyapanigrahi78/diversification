@@ -104,6 +104,9 @@ def optimize_weights(risk_profile: str) -> np.ndarray:
 with st.sidebar:
     st.header("Your planner")
     investment = st.number_input("Investment amount (INR)", min_value=10000, value=5000000, step=10000, format="%d")
+    st.warning(
+        "💡 Smart Retail Rule: The Emergency Shield\n\nBefore investing your ₹ Capital, ensure you have set aside 3 to 6 months of basic living expenses in a regular bank savings account. Never invest money you might need next month!"
+    )
     risk_profile = st.selectbox("Risk approach", ["Conservative", "Moderate", "Aggressive"])
     st.caption("Pick the pace that feels right for you. This simple planner adjusts your mix automatically.")
 
@@ -130,17 +133,7 @@ risk_copy = {
 }[risk_profile]
 
 
-st.markdown(
-    """
-    <div class="hero-card">
-        <div class="hero-title">A simpler way to plan your money</div>
-        <div class="hero-sub">This dashboard turns a complicated investing mix into a clear, easy next step for everyday investors.</div>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-st.markdown("## Your snapshot")
+st.markdown("## Capital Diversification Framework")
 col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.markdown(
@@ -176,16 +169,29 @@ with col3:
         unsafe_allow_html=True,
     )
 with col4:
+    if net_profit_above_inflation > 0:
+        card_bg = "#e6f4ea"
+        card_border = "#10b981"
+        card_text = "#10b981"
+    else:
+        card_bg = "#fde8e8"
+        card_border = "#ef4444"
+        card_text = "#ef4444"
+
     st.markdown(
         f"""
-        <div class="kpi-box">
+        <div class="kpi-box" style="background:{card_bg}; border-color:{card_border};">
             <div class="kpi-label">Net profit above inflation</div>
-            <div class="kpi-value">{net_profit_above_inflation:+.2f}%</div>
-            <div class="kpi-note">This compares your return with India's current inflation rate.</div>
+            <div class="kpi-value" style="color:{card_text};">{net_profit_above_inflation:+.2f}%</div>
+            <div class="kpi-note" style="color:{card_text};">This compares your return with India's current inflation rate.</div>
         </div>
         """,
         unsafe_allow_html=True,
     )
+
+st.markdown(
+    "✨ Real-World Impact: Beating inflation means your wealth is actively growing. Instead of your cash losing value in a standard bank account, this diversified framework defends your family's future purchasing power against rising prices."
+)
 
 st.markdown("### Quick check")
 st.markdown(
@@ -265,6 +271,19 @@ fig_corr.update_layout(
 fig_corr.update_xaxes(showgrid=True, gridcolor="#e2e8f0", zeroline=False)
 fig_corr.update_yaxes(showgrid=True, gridcolor="#e2e8f0", zeroline=False)
 st.plotly_chart(fig_corr, use_container_width=True)
+
+with st.container():
+    st.markdown("🛡️ How This Mix Protects Your Capital (Hedging Guide)")
+    st.write(
+        "Notice how some blocks on the matrix show very low or negative numbers? For example, when Equities fall during a market crash, Gold or Fixed Income traditionally stand firm or move up. This relationship is called a 'hedge'. By keeping assets that don't always move together, your total money stays safe even if one market hits a rough patch."
+    )
+
+with st.expander("🔍 Don't understand these grid numbers? Click here for a simple breakdown"):
+    st.markdown(
+        "- A score of 1.0 means the assets move like identical twins.\n"
+        "- A score near 0.0 means they don't care about each other—this is perfect for safety!\n"
+        "- A negative score (like -0.12) means when one goes down, the other goes up to save you."
+    )
 
 
 st.markdown("## Friendly advisor takeaway")
