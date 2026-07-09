@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 
-st.set_page_config(page_title="Simple Multi-Asset Planner", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Simple Multi-Asset Planner", page_icon="chart", layout="wide")
 
 st.markdown(
     """
@@ -105,7 +105,7 @@ with st.sidebar:
     st.header("Your planner")
     investment = st.number_input("Investment amount (INR)", min_value=10000, value=5000000, step=10000, format="%d")
     st.warning(
-        "💡 Smart Retail Rule: The Emergency Shield\n\nBefore investing your ₹ Capital, ensure you have set aside 3 to 6 months of basic living expenses in a regular bank savings account. Never invest money you might need next month!"
+        "Smart Retail Rule: The Emergency Shield\n\nBefore investing your ₹ Capital, ensure you have set aside 3 to 6 months of basic living expenses in a regular bank savings account. Never invest money you might need next month!"
     )
     risk_profile = st.selectbox("Risk approach", ["Conservative", "Moderate", "Aggressive"])
     st.caption("Pick the pace that feels right for you. This simple planner adjusts your mix automatically.")
@@ -190,7 +190,7 @@ with col4:
     )
 
 st.markdown(
-    "✨ Real-World Impact: Beating inflation means your wealth is actively growing. Instead of your cash losing value in a standard bank account, this diversified framework defends your family's future purchasing power against rising prices."
+    "Real-World Impact: Beating inflation means your wealth is actively growing. Instead of your cash losing value in a standard bank account, this diversified framework defends your family's future purchasing power against rising prices."
 )
 
 st.markdown("### Quick check")
@@ -273,12 +273,12 @@ fig_corr.update_yaxes(showgrid=True, gridcolor="#e2e8f0", zeroline=False)
 st.plotly_chart(fig_corr, use_container_width=True)
 
 with st.container():
-    st.markdown("🛡️ How This Mix Protects Your Capital (Hedging Guide)")
+    st.markdown("How This Mix Protects Your Capital (Hedging Guide)")
     st.write(
         "Notice how some blocks on the matrix show very low or negative numbers? For example, when Equities fall during a market crash, Gold or Fixed Income traditionally stand firm or move up. This relationship is called a 'hedge'. By keeping assets that don't always move together, your total money stays safe even if one market hits a rough patch."
     )
 
-with st.expander("🔍 Don't understand these grid numbers? Click here for a simple breakdown"):
+with st.expander("Don't understand these grid numbers? Click here for a simple breakdown"):
     st.markdown(
         "- A score of 1.0 means the assets move like identical twins.\n"
         "- A score near 0.0 means they don't care about each other—this is perfect for safety!\n"
@@ -294,7 +294,7 @@ st.markdown(
     "- Your return still beats inflation when the plan stays steady."
 )
 
-st.markdown("## 📊 Quick Asset Class Guide")
+st.markdown("## Quick Asset Class Guide")
 cheat_sheet_rows = [
     ["Nifty 50", "High Risk", "~12-14%", "Ultimate Wealth Generator"],
     ["US Stocks", "High Risk", "~10-12%", "Global Growth Booster"],
@@ -334,11 +334,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.markdown("🏆 Safest Spot: Cash and Bonds keep your money completely safe from stock market crashes.")
-st.markdown("🚀 Growth Engines: Nifty 50 and US Stocks have big swings but grow your wealth the fastest over time.")
-st.markdown("🛡️ Your Insurance: Gold is your ultimate protection shield when inflation rises or markets panic.")
+st.markdown("Safest Spot: Cash and Bonds keep your money completely safe from stock market crashes.")
+st.markdown("Growth Engines: Nifty 50 and US Stocks have big swings but grow your wealth the fastest over time.")
+st.markdown("Your Insurance: Gold is your ultimate protection shield when inflation rises or markets panic.")
 
-shock_test = st.checkbox("💥 Simulate a 2020-Style Stock Market Crash")
+shock_test = st.checkbox("Simulate a 2020-Style Stock Market Crash")
 if shock_test:
     equity_weight = weights[0] + weights[1]
     estimated_drop = round((equity_weight * 0.30 * 0.30) * 100, 1)
@@ -346,10 +346,16 @@ if shock_test:
         f"If the stock market crashes by -30%, your specific diversified mix would only dip by roughly {estimated_drop:.1f}% because your Gold and Bonds act as a protective cushion!"
     )
 
-st.markdown("## 🔮 Your 10-Year Wealth Journey")
+st.markdown("## Wealth Journey and Goal Planner")
 years = st.slider("Select Time Horizon (Years)", min_value=1, max_value=25, value=10, step=1)
+goal_target = st.number_input("Enter your target financial goal amount (INR)", value=500000)
 future_value = investment * ((1 + portfolio_return) ** years)
 
 st.markdown(
-    f"💰 Growing to: ₹{future_value:,.0f}! By keeping your money diversified over {years} years, your wealth multiplies efficiently while safely defending against inflation."
+    f"Growing to: ₹{future_value:,.0f}! By keeping your money diversified over {years} years, your wealth multiplies efficiently while safely defending against inflation."
 )
+
+if future_value >= goal_target:
+    st.success("Goal Status: On Track. Based on your current strategy, your projected wealth will cover your target goal with an estimated surplus.")
+else:
+    st.info("Goal Status: Capital Gap. To reach your goal within this timeline, consider increasing your investment or adjusting your risk tolerance.")
