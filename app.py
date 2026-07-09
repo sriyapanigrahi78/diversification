@@ -288,18 +288,33 @@ with st.expander("🔍 Don't understand these grid numbers? Click here for a sim
 
 st.markdown("## Friendly advisor takeaway")
 st.markdown(
-    """
-    <div class="advice-card">
-        <p>Your money is spread across a mix of growth assets and a little safety cushion. That helps you stay invested without feeling like every market move is a big surprise.</p>
-    </div>
-    """,
-    unsafe_allow_html=True,
+    "- Your plan spreads money across growth, protection, and cash.\n"
+    "- The biggest slice fits your chosen risk style.\n"
+    "- Gold and bonds help soften sharp market drops.\n"
+    "- Your return still beats inflation when the plan stays steady."
 )
 
-best_asset = assets[int(np.argmax(weights))]
-best_weight = weights[int(np.argmax(weights))] * 100
+st.markdown("## 📊 Quick Asset Class Guide")
+cheat_sheet_df = pd.DataFrame(
+    [
+        ["Nifty 50", "High Risk", "~12-14%", "Ultimate Wealth Generator"],
+        ["US Stocks", "High Risk", "~10-12%", "Global Growth Booster"],
+        ["Gold", "Medium Risk", "~8-10%", "Crisis Protection Shield"],
+        ["Bonds", "Low Risk", "~6-8%", "Steady & Safe Income"],
+        ["Cash", "Zero Risk", "~3-4%", "Safest (Instant Use Emergency Fund)"],
+    ],
+    columns=["Asset Class", "Risk Level", "Historical Returns", "Superpower"],
+)
+st.dataframe(cheat_sheet_df, use_container_width=True, hide_index=True)
 
-st.write(f"- The biggest piece goes to {best_asset} at about {best_weight:.1f}%, which fits your {risk_profile.lower()} style.")
-st.write(f"- A steady slice is kept in bonds and cash to add a sense of safety and flexibility.")
-st.write(f"- Gold helps protect your plan when prices are rising faster than expected.")
-st.write(f"- Your expected return is {expected_return_pct:.1f}% and the current inflation rate is {inflation_rate:.2f}%, so the plan is {net_profit_above_inflation:+.2f}% above that marker.")
+st.markdown("🏆 Safest Spot: Cash and Bonds keep your money completely safe from stock market crashes.")
+st.markdown("🚀 Growth Engines: Nifty 50 and US Stocks have big swings but grow your wealth the fastest over time.")
+st.markdown("🛡️ Your Insurance: Gold is your ultimate protection shield when inflation rises or markets panic.")
+
+shock_test = st.checkbox("💥 Simulate a 2020-Style Stock Market Crash")
+if shock_test:
+    equity_weight = weights[0] + weights[1]
+    estimated_drop = round((equity_weight * 0.30 * 0.30) * 100, 1)
+    st.success(
+        f"If the stock market crashes by -30%, your specific diversified mix would only dip by roughly {estimated_drop:.1f}% because your Gold and Bonds act as a protective cushion!"
+    )
