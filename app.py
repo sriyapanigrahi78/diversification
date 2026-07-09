@@ -320,7 +320,7 @@ def main() -> None:
                     </tr>
                 """
 
-            html_table_code = f"""
+            table_html = f"""
             <table style='width:100%; border-collapse: collapse; font-size:14px;'>
                 <thead>
                     <tr>
@@ -332,23 +332,7 @@ def main() -> None:
                 <tbody>{rows_html}</tbody>
             </table>
             """
-
-            html_table_code = f"""
-            <div style='background:#ffffff; border:1px solid #e2e8f0; border-radius:18px; padding:18px; box-shadow:0 10px 24px rgba(15,23,42,0.08);'>
-                <div style='font-size:18px; font-weight:700; margin-bottom:14px;'>Simple Allocation Grid</div>
-                <table style='width:100%; border-collapse: collapse; font-size:14px;'>
-                    <thead>
-                        <tr>
-                            <th style='padding:14px 12px; text-align:left; color:#475569; border-bottom:1px solid #e2e8f0;'>Asset Class</th>
-                            <th style='padding:14px 12px; text-align:right; color:#475569; border-bottom:1px solid #e2e8f0;'>Allocation</th>
-                            <th style='padding:14px 12px; text-align:right; color:#475569; border-bottom:1px solid #e2e8f0;'>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>{rows_html}</tbody>
-                </table>
-            </div>
-            """
-            st.markdown(html_table_code, unsafe_allow_html=True)
+            st.markdown(table_html, unsafe_allow_html=True)
 
         st.markdown("### Emergency Shield")
         st.warning(
