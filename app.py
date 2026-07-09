@@ -163,7 +163,7 @@ def main() -> None:
         )
 
     st.markdown(
-        """
+        f"""
         <div style='display:flex;flex-wrap:wrap;gap:12px; margin-bottom: 14px;'>
             <div class='metric-card' style='flex:1; min-width:220px; background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);'>
                 <div class='label'>Total Capital</div>
@@ -181,7 +181,7 @@ def main() -> None:
                 <div class='note'>Higher means stronger protection during rough markets.</div>
             </div>
         </div>
-        """.format(investment=investment, expected_return_pct=expected_return_pct, config=config),
+        """,
         unsafe_allow_html=True,
     )
 
